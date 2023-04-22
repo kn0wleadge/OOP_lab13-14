@@ -25,7 +25,7 @@ public:
     {
 
     }
-    void writeBinary(std::ostream& out,const void* ptr, size_t size) {
+    void writeBinary(std::ostream& out, void* ptr, size_t size) {
         out.write((char*)(ptr), size);
     }
     void changeNegativeNum(std::string path, float* process)
@@ -54,6 +54,7 @@ public:
         else if (newFile)
         {
             int n;
+            int p = 0;
             for (int i = 0; i < QuantityOfElements; i++)
             {
                 file1.read(reinterpret_cast<char*>(&n), sizeof(n));
@@ -62,15 +63,14 @@ public:
                 if (numbers[i] > 0)
                 {
                     std::string str = std::to_string(numbers[i]);
-                    str.append(" ");
                     const char* n1 = str.data();/*new char[4] {0};*/
                     //itoa(numbers[i], n1, 10);
-                    writeBinary(newFile, n1, str.size());
+                    newFile.write(reinterpret_cast<char*>(&n), sizeof(int));
                 }
                 else
                 {
-
-                    writeBinary(newFile, empty, sizeof(char));
+                    newFile.write(reinterpret_cast<char*>(&p), sizeof(int));
+               
                 }
                 *process = ((float)i + 1) / QuantityOfElements;
                 //std::this_thread::sleep_for(std::chrono::microseconds(1));
