@@ -25,7 +25,7 @@ public:
     {
 
     }
-    void writeBinary(std::ostream& out, char* ptr, size_t size) {
+    void writeBinary(std::ostream& out,const void* ptr, size_t size) {
         out.write((char*)(ptr), size);
     }
     void changeNegativeNum(std::string path, float* process)
@@ -39,17 +39,17 @@ public:
         std::ofstream newFile{ path,std::ios::binary };
         if (!newFile)
         {
-            std::cout << "jeka lushiy";
+            std::cout << "new Samples is not opened";
         }
         std::streampos fileSize = file1.tellg();
         file1.seekg(0, std::ios::beg);
         int numElements = fileSize / sizeof(int);
         QuantityOfElements = numElements;
         numbers = new int[QuantityOfElements + 1];
-        const char* empty = new char[3]{ "0" };
+        const char* empty = new char[2]{"0" };
         if (!file1)
         {
-            std::cout << std::endl << "Start file is not opened" << std::endl;
+            std::cout << std::endl << "old file is not opened" << std::endl;
         }
         else if (newFile)
         {
